@@ -1,6 +1,6 @@
-\name{brocotstub-package}
-\alias{brocotstub-package}
-\alias{brocotstub}
+\name{brocot-package}
+\alias{brocot-package}
+\alias{brocot}
 \docType{package}
 \title{
   A short title line describing what the package does

@@ -12,7 +12,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // rcpp_hello_world
 List rcpp_hello_world();
-RcppExport SEXP _brocotstub_rcpp_hello_world() {
+RcppExport SEXP _brocot_rcpp_hello_world() {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -22,11 +22,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_brocotstub_rcpp_hello_world", (DL_FUNC) &_brocotstub_rcpp_hello_world, 0},
+    {"_brocot_rcpp_hello_world", (DL_FUNC) &_brocot_rcpp_hello_world, 0},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_brocotstub(DllInfo *dll) {
+RcppExport void R_init_brocot(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

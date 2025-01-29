@@ -50,3 +50,7 @@ rsconnect/
 
 # macos stuff
 .DS_Store
+
+# Ignore compiled object files
+src/*.o
+src/*.so

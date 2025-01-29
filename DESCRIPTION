@@ -1,10 +1,18 @@
-Package: brocotstub
+Package: brocot
 Type: Package
 Title: Concise Summary of What the Package Does
 Version: 1.0
 Date: 2025-01-28
 Authors@R: person("Your", "Name", role = c("aut", "cre"), email = "your@email.com")
 Description: More about what it does (maybe more than one line).
-License: GPL (>= 2)
-Imports: Rcpp (>= 1.0.14)
+Imports: 
+    Rcpp (>= 1.0.14),
+    coprimer
+Remotes: 
+    github::homeymusic/coprimer
 LinkingTo: Rcpp
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+License: MIT + file LICENSE
+RoxygenNote: 7.3.1

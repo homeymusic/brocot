@@ -1,2 +1,8 @@
-^.*\.Rproj$
+^\.github$
+^LICENSE\.md$
+^brocot\.Rproj$
 ^\.Rproj\.user$
+^CITATION$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^README\.Rmd$

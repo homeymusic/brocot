@@ -1,0 +1,8 @@
+---
+output: github_document
+title: "brocot"
+---
+
+![](man/figures/brocot_logo.png){ width=120px align=right }
+
+`brocot` is an R package for exploring physics with coprime fractions.
