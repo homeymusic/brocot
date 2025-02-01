@@ -7,9 +7,10 @@ ui <- shiny::fluidPage(
       shiny::sliderInput("sigma_x_max", "Max Sigma X:", min = 1/100, max = 1, value = 1/(4 * pi), step = 1/200),
       shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = 201, value = 101, step = 1),
       shiny::sliderInput("num_samples", "Number of Samples:", min = 500, max = 5000, value = 1000, step = 500),
-      shiny::sliderInput("slit_width", "Slit Width:", min = 1, max = 5, value = 2, step = 0.1)
+      shiny::sliderInput("slit_width", "Slit Width:", min = 0.1, max = 5, value = 1, step = 0.1)
     ),
     shiny::mainPanel(
+      shiny::plotOutput("scatter_approx_depth"),
       shiny::plotOutput("hist_approximation"),
       shiny::plotOutput("hist_error"),
       shiny::plotOutput("hist_reals")
@@ -34,6 +35,20 @@ server <- function(input, output) {
     
     x <- coprimer::stern_brocot(x_real, sigma_x_lt, sigma_x_gt)
     return(list(x = x, num_bins = num_bins))
+  })
+  
+  # Scatter Plot: Approximation vs Depth
+  output$scatter_approx_depth <- renderPlot({
+    data <- stern_data()
+    
+    ggplot2::ggplot(data.frame(approximation = data$x$approximation, depth = data$x$depth),
+                    ggplot2::aes(x = approximation, y = depth)) +
+      ggplot2::geom_point(alpha = 0.5, color = "black") +  # Scatter plot with transparency
+      ggplot2::labs(title = "Stern-Brocot Approximation vs. Depth",
+                    x = "Approximation", y = "Depth") +
+      ggplot2::theme_minimal() +
+      ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
+      ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number())
   })
   
   # Histogram of Stern-Brocot Approximation
