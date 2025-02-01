@@ -8,23 +8,28 @@ title: "brocot"
 `brocot` is an R package for exploring physics with coprime fractions.
 
 ```{r, echo=FALSE}
-dx           = 1/1000
-min_x        = 2*dx
-max_x        = 2 - 2*dx
-x_real       = seq(from=min_x, to=max_x, by=dx)
+num_samples  = 1000
+num_bins     = 101
 sigma_x_max  = 1/(4*pi)
+slit_width   = 2
+
+dx           = 1/num_samples
+min_x        = 2*dx
+max_x        = slit_width - 2*dx
+x_real       = seq(from=min_x, to=max_x, by=dx)
 sigma_x_lt   = pmin(x_real - min_x + dx, sigma_x_max)
 sigma_x_gt   = pmin(max_x - x_real + dx, sigma_x_max)
 x = coprimer::stern_brocot(x_real, sigma_x_lt, sigma_x_gt)
+```
 
-num_bins = 101
-
+```{r, echo=FALSE}
 ggplot2::ggplot(data.frame(approximation = x$approximation), ggplot2::aes(x = approximation)) +
   ggplot2::geom_histogram(bins = num_bins, fill = "gray", color = "black") +
   ggplot2::labs(title = "Histogram of Stern-Brocot Rational Numbers", x = "Rational Number", y = "Count") +
   ggplot2::theme_minimal()
+```
 
-
+```{r, echo=FALSE}
 ggplot2::ggplot(data.frame(error = x$error), ggplot2::aes(x = error)) +
   ggplot2::geom_histogram(bins = num_bins, fill = "gray", color = "black") +
   ggplot2::labs(title = "Histogram of Stern-Brocot Errors", x = "Error", y = "Count") +

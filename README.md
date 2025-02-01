@@ -5,4 +5,6 @@ brocot
 
 `brocot` is an R package for exploring physics with coprime fractions.
 
-![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-1-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
