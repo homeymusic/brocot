@@ -3,7 +3,7 @@
 #' This function launches the Shiny app for visualizing Stern-Brocot approximations.
 #'
 #' @export
-run_shiny <- function() {
+run_histograms <- function() {
   app_dir <- system.file("shiny", "app.R", package = "brocot")
   if (app_dir == "") {
     stop("Shiny app directory not found. Try reinstalling the package.", call. = FALSE)

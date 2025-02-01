@@ -11,7 +11,8 @@ ui <- shiny::fluidPage(
     ),
     shiny::mainPanel(
       shiny::plotOutput("hist_approximation"),
-      shiny::plotOutput("hist_error")
+      shiny::plotOutput("hist_error"),
+      shiny::plotOutput("hist_reals")
     )
   )
 )
@@ -58,6 +59,22 @@ server <- function(input, output) {
     ggplot2::ggplot(data.frame(error = data$x$error), ggplot2::aes(x = error)) +
       ggplot2::geom_histogram(bins = data$num_bins, fill = "gray", color = "black") +
       ggplot2::labs(title = "Histogram of Stern-Brocot Errors", x = "Error", y = "Count") +
+      ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
+      ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(size = 12, margin = ggplot2::margin(t = 10)),
+        axis.text.y = ggplot2::element_text(size = 12, margin = ggplot2::margin(r = 10))
+      )
+  })
+  
+  # Histogram of Reals Input
+  output$hist_reals <- renderPlot({
+    data <- stern_data()
+    
+    ggplot2::ggplot(data.frame(reals = data$x$x), ggplot2::aes(x = reals)) +
+      ggplot2::geom_histogram(bins = data$num_bins, fill = "gray", color = "black") +
+      ggplot2::labs(title = "Histogram of Real Numbers", x = "Real Number", y = "Count") +
       ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
       ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
       ggplot2::theme_minimal() +
