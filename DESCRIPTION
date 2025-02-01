@@ -6,6 +6,8 @@ Date: 2025-01-28
 Authors@R: person("Your", "Name", role = c("aut", "cre"), email = "your@email.com")
 Description: More about what it does (maybe more than one line).
 Imports: 
+    shiny,
+    ggplot2,
     coprimer
 Remotes: 
     github::homeymusic/coprimer

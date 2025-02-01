@@ -7,6 +7,7 @@
 #' along with details about the fraction, error, and Stern-Brocot path.
 #' @export
 #' @importFrom coprimer stern_brocot
+#' @importFrom ggplot2 ggplot
 #'
 #' @examples
 #' example_sb_call()
