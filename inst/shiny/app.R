@@ -1,17 +1,26 @@
+# Define default values in one place
+default_values <- list(
+  sigma_x_max = 1/(4 * pi),
+  num_bins = 101,
+  num_samples = 101,
+  slit_width = 1
+)
+
 # Define UI
 ui <- shiny::fluidPage(
   shiny::titlePanel("Interactive Stern-Brocot Approximation"),
   
   shiny::sidebarLayout(
     shiny::sidebarPanel(
-      shiny::sliderInput("sigma_x_max", "Max Sigma X:", min = 1/100, max = 1, value = 1/(4 * pi), step = 1/200),
-      shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = 201, value = 101, step = 1),
-      shiny::sliderInput("num_samples", "Number of Samples:", min = 500, max = 5000, value = 1000, step = 500),
-      shiny::sliderInput("slit_width", "Slit Width:", min = 0.1, max = 5, value = 1, step = 0.1)
+      shiny::sliderInput("sigma_x_max", "Uncertainty:", min = 1/100, max = 1, value = default_values$sigma_x_max),
+      shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = 201, value = default_values$num_bins),
+      shiny::sliderInput("num_samples", "Number of Samples:", min = 101, max = 5001, value = default_values$num_samples),
+      shiny::sliderInput("slit_width", "Slit Width:", min = 1/10, max = 100, value = default_values$slit_width),
+      shiny::actionButton("reset", "Reset Values")
     ),
     shiny::mainPanel(
-      shiny::plotOutput("scatter_approx_depth"),
       shiny::plotOutput("hist_approximation"),
+      shiny::plotOutput("scatter_approx_depth"),
       shiny::plotOutput("hist_error"),
       shiny::plotOutput("hist_reals")
     )
@@ -19,20 +28,33 @@ ui <- shiny::fluidPage(
 )
 
 # Define Server
-server <- function(input, output) {
+server <- function(input, output, session) {
+  
+  observe({
+    updateSliderInput(session, "num_bins", max = input$num_samples)
+    updateSliderInput(session, "sigma_x_max", max = input$slit_width)
+  })
+  
+  # Reset button logic
+  observeEvent(input$reset, {
+    lapply(names(default_values), function(var) {
+      updateSliderInput(session, var, value = default_values[[var]])
+    })
+  })
+  
   stern_data <- shiny::reactive({
     num_samples  <- input$num_samples
     num_bins     <- input$num_bins
     sigma_x_max  <- input$sigma_x_max
     slit_width   <- input$slit_width
     
-    dx           <- 1 / num_samples
-    min_x        <- 2 * dx
-    max_x        <- slit_width - 2 * dx
-    x_real       <- seq(from = min_x, to = max_x, by = dx)
-    sigma_x_lt   <- pmin(x_real - min_x + dx, sigma_x_max)
-    sigma_x_gt   <- pmin(max_x - x_real + dx, sigma_x_max)
-    
+    dx           <-  1 / num_samples
+    min_x        <- -slit_width / 2
+    max_x        <-  slit_width / 2
+    x_real       <-  seq(from = min_x, to = max_x, by = dx)
+    sigma_x_lt   <-  pmin(abs(x_real - min_x), sigma_x_max)
+    sigma_x_gt   <-  pmin(abs(max_x - x_real), sigma_x_max)
+
     x <- coprimer::stern_brocot(x_real, sigma_x_lt, sigma_x_gt)
     return(list(x = x, num_bins = num_bins))
   })
