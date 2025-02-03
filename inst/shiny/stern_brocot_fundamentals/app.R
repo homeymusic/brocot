@@ -48,7 +48,7 @@ server <- function(input, output, session) {
     sigma_x_max  <- input$sigma_x_max
     slit_width   <- input$slit_width
     
-    dx           <-  1 / num_samples
+    dx           <-  slit_width / num_samples
     min_x        <- -slit_width / 2
     max_x        <-  slit_width / 2
     x_real       <-  seq(from = min_x, to = max_x, by = dx)
