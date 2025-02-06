@@ -11,7 +11,7 @@ A data frame containing the rational approximation of the sqrt of 2,
 along with details about the fraction, error, and Stern-Brocot path.
 }
 \description{
-This function calls `coprimer::stern_brocot()` to approximate the sqrt of 2
+This function calls `coprimer::nearby_coprime()` to approximate the sqrt of 2
 using the Stern-Brocot tree within a tolerance of 0.08.
 }
 \examples{

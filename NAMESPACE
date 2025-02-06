@@ -3,5 +3,5 @@
 export(example_sb_call)
 export(run_histograms)
 export(run_single_slit)
-importFrom(coprimer,stern_brocot)
+importFrom(coprimer,nearby_coprime)
 importFrom(ggplot2,ggplot)

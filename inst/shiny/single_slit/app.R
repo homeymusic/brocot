@@ -1,9 +1,8 @@
 # Define default values in one place
 default_values <- list(
-  sigma_x_max = 1/(4 * pi),
-  num_bins = 101,
+  num_bins = 11,
   num_samples = 101,
-  slit_width = 1/(4*pi)
+  slit_width = 2
 )
 
 # Define UI
@@ -14,7 +13,7 @@ ui <- shiny::fluidPage(
     shiny::sidebarPanel(
       shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = 201, value = default_values$num_bins),
       shiny::sliderInput("num_samples", "Number of Samples:", min = 101, max = 5001, value = default_values$num_samples),
-      shiny::sliderInput("slit_width", "Slit Width:", min = 0.0001, max = 0.3, value = default_values$slit_width),
+      shiny::sliderInput("slit_width", "Slit Width:", min = 0.001, max = 10, value = default_values$slit_width),
       shiny::actionButton("reset", "Reset Values")
     ),
     shiny::mainPanel(
@@ -45,22 +44,16 @@ server <- function(input, output, session) {
     num_samples   <- input$num_samples
     num_bins      <- input$num_bins
     slit_width    <- input$slit_width
-    p_uncertainty <- 1 / (4 * pi * slit_width)
-    
+
     dx            <-  slit_width / num_samples
     min_x         <- -slit_width / 2
     max_x         <-  slit_width / 2
-    x_slit        <-  seq(from = min_x, to = max_x, by = dx)
+    x_slit_r      <-  seq(from = min_x, to = max_x, by = dx)
+    x_slit_q      <-  coprimer::nearby_coprime(x_slit_r, 
+                                               abs(x_slit_r-min_x),
+                                               abs(max_x-x_slit_r))
     
-    dp            <-  p_uncertainty / num_samples
-    min_p         <- -p_uncertainty / 2
-    max_p         <-  p_uncertainty / 2
-    p_slit        <-  seq(from = min_p, to = max_p, by = dp)
-    
-    x_screen      <-  x_slit + p_slit
-    
-    x <- coprimer::stern_brocot(x_screen, slit_width, slit_width)
-    return(list(x = x, num_bins = num_bins))
+    return(list(x = x_slit_q, num_bins = num_bins))
   })
   
   # Scatter Plot: Approximation vs Depth

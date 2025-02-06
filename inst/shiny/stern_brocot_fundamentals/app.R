@@ -1,6 +1,5 @@
 # Define default values in one place
 default_values <- list(
-  sigma_x_max = 1/(4 * pi),
   num_bins = 101,
   num_samples = 101,
   slit_width = 1
@@ -52,10 +51,12 @@ server <- function(input, output, session) {
     min_x        <- -slit_width / 2
     max_x        <-  slit_width / 2
     x_real       <-  seq(from = min_x, to = max_x, by = dx)
-    sigma_x_lt   <-  pmin(abs(x_real - min_x), sigma_x_max)
-    sigma_x_gt   <-  pmin(abs(max_x - x_real), sigma_x_max)
-
-    x <- coprimer::stern_brocot(x_real, sigma_x_lt, sigma_x_gt)
+    # sigma_x_lt   <-  pmin(abs(x_real - min_x), sigma_x_max)
+    # sigma_x_gt   <-  pmin(abs(max_x - x_real), sigma_x_max)
+    sigma_x_lt   <-  pmin(abs(x_real - min_x))
+    sigma_x_gt   <-  pmin(abs(max_x - x_real))
+    
+    x <- coprimer::nearby_coprime(x_real, sigma_x_lt, sigma_x_gt)
     return(list(x = x, num_bins = num_bins))
   })
   
