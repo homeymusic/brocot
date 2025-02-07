@@ -1,6 +1,6 @@
 # Define default values in one place
 default_values <- list(
-  num_bins = 101,
+  num_bins = 1001,
   num_samples = 1001,
   slit_width = 17
 )
@@ -14,19 +14,19 @@ ui <- shiny::fluidPage(
       shinyWidgets::sliderTextInput(
         inputId = "slit_width", 
         label = "Slit Width:", 
-        choices = sort(c(as.vector(outer(1:9, 10^(-3:3), "*")), 17)),
+        choices = sort(c(as.vector(outer(1:9, 10^(-3:3), "*")), 12.6, 17)),
         selected = default_values$slit_width
       ),
-      shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = 201, value = default_values$num_bins),
       shiny::sliderInput("num_samples", "Number of Samples:", min = 101, max = 5001, value = default_values$num_samples),
+      shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = default_values$num_samples, value = default_values$num_bins),
       shiny::actionButton("reset", "Reset Values")
     ),
     shiny::mainPanel(
       shiny::plotOutput("hist_approximation"),
       shiny::plotOutput("thomaes_function"),
       shiny::plotOutput("euclids_orchard"),
-      shiny::plotOutput("scatter_approx_depth"),
       shiny::plotOutput("hist_error"),
+      shiny::plotOutput("scatter_approx_depth"),
       shiny::plotOutput("hist_reals")
     )
   )
