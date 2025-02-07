@@ -1,8 +1,8 @@
 # Define default values in one place
 default_values <- list(
-  num_bins = 11,
+  num_bins = 101,
   num_samples = 101,
-  slit_width = 2
+  slit_width = 1
 )
 
 # Define UI
@@ -13,11 +13,12 @@ ui <- shiny::fluidPage(
     shiny::sidebarPanel(
       shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = 201, value = default_values$num_bins),
       shiny::sliderInput("num_samples", "Number of Samples:", min = 101, max = 5001, value = default_values$num_samples),
-      shiny::sliderInput("slit_width", "Slit Width:", min = 0.001, max = 10, value = default_values$slit_width),
+      shiny::sliderInput("slit_width", "Slit Width:", min = 1/100, max = 100, value = default_values$slit_width, step=1/100),
       shiny::actionButton("reset", "Reset Values")
     ),
     shiny::mainPanel(
       shiny::plotOutput("hist_approximation"),
+      shiny::plotOutput("thomaes_function"),
       shiny::plotOutput("scatter_approx_depth"),
       shiny::plotOutput("hist_error"),
       shiny::plotOutput("hist_reals")
@@ -30,7 +31,6 @@ server <- function(input, output, session) {
   
   observe({
     updateSliderInput(session, "num_bins", max = input$num_samples)
-    updateSliderInput(session, "sigma_x_max", max = input$slit_width)
   })
   
   # Reset button logic
@@ -39,21 +39,33 @@ server <- function(input, output, session) {
       updateSliderInput(session, var, value = default_values[[var]])
     })
   })
-  
-  stern_data <- shiny::reactive({
-    num_samples   <- input$num_samples
-    num_bins      <- input$num_bins
-    slit_width    <- input$slit_width
 
-    dx            <-  slit_width / num_samples
-    min_x         <- -slit_width / 2
-    max_x         <-  slit_width / 2
-    x_slit_r      <-  seq(from = min_x, to = max_x, by = dx)
-    x_slit_q      <-  coprimer::nearby_coprime(x_slit_r, 
-                                               abs(x_slit_r-min_x),
-                                               abs(max_x-x_slit_r))
+  stern_data <- shiny::reactive({
+    num_samples  <- input$num_samples
+    num_bins     <- input$num_bins
+    slit_width   <- input$slit_width
     
-    return(list(x = x_slit_q, num_bins = num_bins))
+    dx           <-  slit_width / num_samples
+    min_x        <- -slit_width / 2 + dx
+    max_x        <-  slit_width / 2 - dx
+    x_real       <-  seq(from = min_x, to = max_x, by = dx)
+    sigma_x_lt   <-  x_real - min_x
+    sigma_x_gt   <-  max_x - x_real
+    
+    x <- coprimer::nearby_coprime(x_real, sigma_x_lt, sigma_x_gt)
+    return(list(x = x, num_bins = num_bins))
+  })
+  
+  # Thomae's Function
+  output$thomaes_function <- renderPlot({
+    
+    data <- stern_data()
+    
+    ggplot2::ggplot(data.frame(approximation = data$x$approximation, thomae = data$x$thomae),
+                  ggplot2::aes(x = approximation, y = thomae)) +
+    ggplot2::geom_segment(ggplot2::aes(xend = approximation, y = 0, yend = thomae), color = "black") +
+    ggplot2::labs(title = "Thomae's Function of Stern-Brocot Approximations", x = "Approximation", y = "Thomae") +
+    ggplot2::theme_minimal()
   })
   
   # Scatter Plot: Approximation vs Depth

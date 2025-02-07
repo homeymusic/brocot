@@ -9,12 +9,12 @@ title: "brocot"
 
 ```{r, echo=FALSE}
 num_samples  = 1000
-num_bins     = 101
+num_bins     = 1001
 slit_width   = 2
 
 dx           = 1/num_samples
-min_x        = 2*dx
-max_x        = slit_width - 2*dx
+min_x        = -slit_width / 2 + dx
+max_x        =  slit_width / 2 - dx
 x_real       = seq(from=min_x, to=max_x, by=dx)
 sigma_x_lt   = x_real - min_x
 sigma_x_gt   = max_x - x_real
@@ -23,14 +23,41 @@ x = coprimer::nearby_coprime(x_real, sigma_x_lt, sigma_x_gt)
 
 ```{r, echo=FALSE}
 ggplot2::ggplot(data.frame(approximation = x$approximation), ggplot2::aes(x = approximation)) +
-  ggplot2::geom_histogram(bins = num_bins, fill = "gray", color = "black") +
+  ggplot2::geom_histogram(bins = num_bins, fill = "black") +
   ggplot2::labs(title = "Histogram of Stern-Brocot Rational Numbers", x = "Rational Number", y = "Count") +
   ggplot2::theme_minimal()
 ```
 
 ```{r, echo=FALSE}
+ggplot2::ggplot(data.frame(approximation = x$approximation, thomae = x$thomae),
+                ggplot2::aes(x = approximation, y = thomae)) +
+  ggplot2::geom_segment(ggplot2::aes(xend = approximation, y = 0, yend = thomae), color = "black") +
+  ggplot2::labs(title = "Thomae's Function of Stern-Brocot Approximations", x = "Approximation", y = "Thomae") +
+  ggplot2::theme_minimal()
+```
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data.frame(approximation = x$approximation, euclid = 1/(abs(x$num) + abs(x$den))),
+                ggplot2::aes(x = approximation, y = euclid)) +
+  ggplot2::geom_segment(ggplot2::aes(xend = approximation, y = 0, yend = euclid), color = "black") +
+  ggplot2::labs(title = "Euclid's Orchard of Stern-Brocot Approximations", x = "Approximation", y = "Redundancy") +
+  ggplot2::theme_minimal()
+```
+
+```{r, echo=FALSE}
 ggplot2::ggplot(data.frame(error = x$error), ggplot2::aes(x = error)) +
-  ggplot2::geom_histogram(bins = num_bins, fill = "gray", color = "black") +
+  ggplot2::geom_histogram(bins = num_bins, fill = "black") +
   ggplot2::labs(title = "Histogram of Stern-Brocot Errors", x = "Error", y = "Count") +
   ggplot2::theme_minimal()
+```
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data.frame(approximation = x$approximation, depth = x$depth),
+                ggplot2::aes(x = approximation, y = depth)) +
+  ggplot2::geom_point(alpha = 0.5, color = "black") +  # Scatter plot with transparency
+  ggplot2::labs(title = "Stern-Brocot Depth vs. Approximation",
+                x = "Approximation", y = "Depth") +
+  ggplot2::theme_minimal() +
+  ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number())
 ```
