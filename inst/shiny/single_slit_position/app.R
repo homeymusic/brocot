@@ -41,9 +41,9 @@ server <- function(input, output, session) {
   
   # Reset button logic
   observeEvent(input$reset, {
-    lapply(names(default_values), function(var) {
-      updateSliderInput(session, var, value = default_values[[var]])
-    })
+    shiny::updateSliderInput(session, 'num_bins', value = default_values[['num_bins']])
+    shiny::updateSliderInput(session, 'num_samples', value = default_values[['num_samples']])
+    shinyWidgets::updateSliderTextInput(session, 'slit_width', selected = default_values[['slit_width']])
   })
 
   stern_data <- shiny::reactive({
