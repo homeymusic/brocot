@@ -37,7 +37,7 @@ ggplot2::ggplot(data.frame(approximation = x$approximation, thomae = x$thomae),
 ```
 
 ```{r, echo=FALSE}
-ggplot2::ggplot(data.frame(approximation = x$approximation, euclid = 1/(abs(x$num) + abs(x$den))),
+ggplot2::ggplot(data.frame(approximation = x$approximation, euclid = x$euclids_orchard_height),
                 ggplot2::aes(x = approximation, y = euclid)) +
   ggplot2::geom_segment(ggplot2::aes(xend = approximation, y = 0, yend = euclid), color = "black") +
   ggplot2::labs(title = "Euclid's Orchard of Stern-Brocot Approximations", x = "Approximation", y = "Redundancy") +
