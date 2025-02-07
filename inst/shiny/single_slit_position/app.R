@@ -14,7 +14,7 @@ ui <- shiny::fluidPage(
       shinyWidgets::sliderTextInput(
         inputId = "slit_width", 
         label = "Slit Width:", 
-        choices = as.vector(outer(1:9, 10^(-3:3), "*")),
+        choices = sort(c(as.vector(outer(1:9, 10^(-3:3), "*")), 17)),
         selected = default_values$slit_width
       ),
       shiny::sliderInput("num_bins", "Number of Bins:", min = 3, max = 201, value = default_values$num_bins),
