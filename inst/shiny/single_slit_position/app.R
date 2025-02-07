@@ -2,7 +2,7 @@
 default_values <- list(
   num_bins = 101,
   num_samples = 1001,
-  slit_width = 2
+  slit_width = 17
 )
 
 # Define UI
