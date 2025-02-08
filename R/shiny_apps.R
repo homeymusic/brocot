@@ -11,6 +11,7 @@ single_slit_position_experiment <- function() {
   shiny::runApp(app_dir, display.mode = "normal")
 }
 
+
 #' Launch the single slit momentum experiment
 #'
 #' This function launches the Shiny app for visualizing momentum within a single slit.

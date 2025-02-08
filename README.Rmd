@@ -12,13 +12,19 @@ num_samples  = 501
 num_bins     = 501
 slit_width   = 17
 
-dx           = 1/num_samples
+dx           = slit_width/num_samples
 min_x        = -slit_width / 2 + dx
 max_x        =  slit_width / 2 - dx
 x_real       = seq(from=min_x, to=max_x, by=dx)
-sigma_x_lt   = x_real - min_x
-sigma_x_gt   = max_x - x_real
+sigma_x_lt   = x_real - min_x + dx
+sigma_x_gt   = max_x - x_real + dx
 x = coprimer::nearby_coprime(x_real, sigma_x_lt, sigma_x_gt)
+
+sigma_p_gt   = 1 / sigma_x_gt
+sigma_p_lt   = 1 / sigma_x_lt
+p_real       = sigma_p_gt - sigma_p_lt
+p = coprimer::nearby_coprime(p_real, sigma_p_lt, sigma_p_gt)
+x$approximation = x$approximation + p$approximation
 ```
 
 ```{r, echo=FALSE}
