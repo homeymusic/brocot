@@ -122,7 +122,7 @@ server <- function(input, output, session) {
   # Histogram of Stern-Brocot Errors
   output$hist_error <- renderPlot({
     data <- stern_data()
-    plot_histogram(data$x, data$num_bins, "approximation", "Histogram of Position", "Rational Number")
+    plot_histogram(data$x, data$num_bins, "error", "Histogram of Position Errors", "Rational Number")
   })
   
   # Histogram of Reals Input
