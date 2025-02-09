@@ -29,37 +29,45 @@ inherently discrete yet dense nature of the rational numbers.
 
 $\Delta \tilde{x} \Delta \tilde{p} \ge \frac{\hbar}{2}$
 
-### Boundary Conditions
+### Boundary conditions
 
 Boundary conditions at the quantum scale are modeled with split
 uncertainties. For example, in the two slit experiment, a particle’s
-epistemological approximation is given as $\tilde{x}$. The distance from
-the left side of the slit would be given as
-$\Delta \tilde{x}_< =  |\tilde{x}_{left} - \tilde{x}|$ and the
-particle’s position from the right side of the slit would be given as
+epistemological approximation is given as $\tilde{x}$. The distance
+between the particle and the left side of the slit would be given as
+$\Delta \tilde{x}_< =  |\tilde{x}_{left} - \tilde{x}|$ and the distance
+between the particle and the right side of the slit would be given as
 $\Delta \tilde{x}_> =  |\tilde{x}_{right} - \tilde{x}|$.
 
 $\Delta \tilde{x} = \Delta \tilde{x}_< + \Delta \tilde{x}_> \quad \Delta \tilde{p} = \Delta \tilde{p}_< + \Delta \tilde{p}_>$
 
-$\Delta \tilde{x}_< \lt \tilde{x} \lt \Delta \tilde{x}_> \quad \Delta \tilde{p}_< \lt \tilde{p} \lt \Delta \tilde{p}_>$
+$\tilde{x} - \Delta \tilde{x}_< \lt \tilde{x} \lt \tilde{x} + \Delta \tilde{x}_> \quad \tilde{p} - \Delta \tilde{p}_< \lt \tilde{p} \lt \tilde{p} + \Delta \tilde{p}_>$
 
-## Stern-Brocot
+## Stern-Brocot Heisenberg Quantizer
 
 The Stern-Brocot tree maps from real, epistemological approximates
 $\tilde{x}, \tilde{p}$ to rational, ontological actuals $x, p$.
 
-$x = \operatorname{SB}(\Delta \tilde{x}_<, \tilde{x}, \Delta \tilde{x}_>) \quad p = \operatorname{SB}(\Delta \tilde{p}_<, \tilde{p}, \Delta \tilde{p}_>)$
+$x = \operatorname{Q}(\Delta \tilde{x}_<, \tilde{x}, \Delta \tilde{x}_>) \quad p = \operatorname{Q}(\Delta \tilde{p}_<, \tilde{p}, \Delta \tilde{p}_>)$
 
 $x,p \in \mathbb{Q}_\perp \quad \tilde{x}, \tilde{p} \in \mathbb{R}$
 
-$\mathbb{Q}_\perp = \left\{ \frac{a}{b} \in \mathbb{Q} \mid a \perp b \iff \gcd(a, b) = 1, \quad a, b \in \mathbb{Z}, \quad b \neq 0 \right\}$
+$\mathbb{Q}_\perp = \left\{ \frac{a}{b} \in \mathbb{Q} \mid a \perp b \iff \gcd(a, b) = 1, a \in \mathbb{Z}, b \in \mathbb{N} \right\}$
+
+$x = \operatorname{Q}(\Delta \tilde{x}_<, \tilde{x}, \Delta \tilde{x}_>)$
+
+$x = \arg\min_{x' \in \{x_<, x_>\}} |\tilde{x} - x'|$
+
+$x_< = \operatorname{SB}(\Delta \tilde{x}_<, \tilde{x}, 0), \quad x_> = \operatorname{SB}(0, \tilde{x}, \Delta \tilde{x}_>)$
 
 ### Distributions
 
 When ontological actual values bounded by uncertainty
 $x \in \mathbb{Q}_\perp = \frac{a}{b} \mid a \perp b$ are distributed on
 the real number line, the distribution can be approximated by Thomae’s
-function $P(x) = \frac{1}{b}$.
+function
+
+$f(x) = \begin{cases} \frac{1}{b}, & \text{if } x = \frac{a}{b} \text{ is a rational number in lowest terms} \\ 0, & \text{if } x \text{ is irrational} \end{cases}$.
 
 For example starting with a uniform distribution of epistemological,
 approximate electron positions $\tilde{x} \in \mathbb{R}$ passing
