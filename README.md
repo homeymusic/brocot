@@ -7,6 +7,83 @@ brocot
 
 `brocot` is an R package for exploring physics with coprime fractions.
 
+# Quantization using rational numbers and Heisenberg uncertainty
+
+There has never been an experimental result in physics given with
+irrational numbers, which are infinite idealizations. Furthermore,
+experimental quantum physics has given results that are integers and
+rational fractions. Our approach in this model is to assert that the
+ontological actual values of physics are confined to rational numbers
+and that real values are epistemological approximations limited by the
+Heisenberg uncertainty principle.
+
+Below, we will demonstrate that particle observations when mapped from
+real numbers to rational numbers using the Stern-Brocot tree bounded by
+Heisenberg uncertainty yields distributions that are experimentally
+indistinguishable from the distributions given by the traditional
+wavefunctions. This model does not introduce probability distributions
+or hidden variables. Instead, quantum phenomena emerge from the
+inherently discrete yet dense nature of the rational numbers.
+
+## Heisenberg Uncertainty
+
+$$\Delta \tilde{x} \Delta \tilde{p} \ge \frac{\hbar}{2}$$
+
+### Boundary Conditions
+
+Boundary conditions at the quantum scale are modeled with split
+uncertainties. For example, in the two slit experiment, a particle’s
+epistemological approximation is given as $\tilde{x}$. The distance from
+the left side of the slit would be given as
+$\Delta \tilde{x}_< =  |\tilde{x}_{left} - \tilde{x}|$ and the
+particle’s position from the right side of the slit would be given as
+$\Delta \tilde{x}_> =  |\tilde{x}_{right} - \tilde{x}|$.
+
+$$\Delta \tilde{x} = \Delta \tilde{x}_< + \Delta \tilde{x}_> \quad \Delta \tilde{p} = \Delta \tilde{p}_< + \Delta \tilde{p}_>$$
+
+$$\Delta \tilde{x}_< \lt \tilde{x} \lt \Delta \tilde{x}_> \quad \Delta \tilde{p}_< \lt \tilde{p} \lt \Delta \tilde{p}_>$$
+
+## Stern-Brocot
+
+The Stern-Brocot tree maps from real, epistemological approximates
+$\tilde{x}, \tilde{p}$ to rational, ontological actuals $x, p$.
+
+$$x = \operatorname{SB}(\Delta \tilde{x}_<, \tilde{x}, \Delta \tilde{x}_>) \quad p = \operatorname{SB}(\Delta \tilde{p}_<, \tilde{p}, \Delta \tilde{p}_>)$$
+
+$$x,p \in \mathbb{Q}_\perp \quad \tilde{x}, \tilde{p} \in \mathbb{R}$$
+
+$$\mathbb{Q}_\perp = \left\{ \frac{a}{b} \in \mathbb{Q} \mid a \perp b \iff \gcd(a, b) = 1, \quad a, b \in \mathbb{Z}, \quad b \neq 0 \right\}$$
+
+### Distributions
+
+When ontological actual values bounded by uncertainty
+$x \in \mathbb{Q}_\perp = \frac{a}{b} \mid a \perp b$ are distributed on
+the real number line, the distribution can be approximated by Thomae’s
+function $P(x) = \frac{1}{b}$.
+
+For example starting with a uniform distribution of epistemological,
+approximate electron positions $\tilde{x} \in \mathbb{R}$ passing
+through a slit, the distribution of ontological, actual positions within
+the slit $x \in \mathbb{Q}_\perp$ will be discrete and approximated by
+Thomae’s function $P(x) = \frac{1}{b}$. Computational simulations show
+the same results as physical one and two slit experiments.
+
+## The relationship between position and momentum
+
+$$\Delta \tilde{x} \ge \frac{\hbar}{2 \Delta \tilde{p}} \quad \Delta \tilde{p} \ge \frac{\hbar}{2 \Delta \tilde{x}}$$
+
+$$\Delta \tilde{p}_< = \frac{\hbar}{2 \Delta \tilde{x}_<} \quad \Delta \tilde{p}_> = \frac{\hbar}{2 \Delta \tilde{x}_>}$$
+
+$$d\tilde{p} = \Delta \tilde{p}_> - \Delta \tilde{p}_<$$
+
+$$\tilde{p} = \tilde{p_0} + d \tilde{p}$$
+
+$$\Delta \tilde{x}_< = \frac{\hbar}{2 \Delta \tilde{p}_<} \quad \Delta \tilde{x}_> = \frac{\hbar}{2 \Delta \tilde{p}_>}$$
+
+$$d\tilde{x} = \frac{\Delta \tilde{x}_< + \Delta \tilde{x}_>}{2}$$
+
+$$\tilde{x} = \tilde{x_0} + d \tilde{x}$$
+
 ## Position vs Momentum
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
