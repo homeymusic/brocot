@@ -60,21 +60,15 @@ $x = \arg\min_{x' \in \{x_<, x_>\}} |\tilde{x} - x'|$
 
 $x_< = \operatorname{SB}(\Delta \tilde{x}_<, \tilde{x}, 0), \quad x_> = \operatorname{SB}(0, \tilde{x}, \Delta \tilde{x}_>)$
 
-### Distributions
+### Thomae’s Function
 
-When ontological actual values bounded by uncertainty
-$x \in \mathbb{Q}_\perp = \frac{a}{b} \mid a \perp b$ are distributed on
-the real number line, the distribution can be approximated by Thomae’s
-function
+The likelihood that a particle within the slit is at position $x$ is
+approximated by Thomae’s function:
 
-$f(x) = \begin{cases} \frac{1}{b}, & \text{if } x = \frac{a}{b} \text{ is a rational number in lowest terms} \\ 0, & \text{if } x \text{ is irrational} \end{cases}$.
+$f(x) = \begin{cases} \frac{1}{b}, & \text{if } x = \frac{a}{b}, a \perp b \\ 0, & \text{if } x \text{ is irrational} \end{cases}$
 
-For example starting with a uniform distribution of epistemological,
-approximate electron positions $\tilde{x} \in \mathbb{R}$ passing
-through a slit, the distribution of ontological, actual positions within
-the slit $x \in \mathbb{Q}_\perp$ will be discrete and approximated by
-Thomae’s function $P(x) = \frac{1}{b}$. Computational simulations show
-the same results as physical one and two slit experiments.
+Computational simulations show the same wavelike results as physical one
+and two slit experiments.
 
 ## The relationship between position and momentum
 
@@ -98,23 +92,11 @@ $\tilde{x} = \tilde{x_0} + d \tilde{x}$
 
 ## Position
 
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-4-3.png)<!-- -->
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](README_files/figure-gfm/unnamed-chunk-4-4.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-4-5.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-4-3.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-4-4.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-4-5.png)<!-- -->
 
 ## Momentum
 
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-5-3.png)<!-- -->
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](README_files/figure-gfm/unnamed-chunk-5-4.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-5-5.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-5-3.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-5-4.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-5-5.png)<!-- -->
 
 ## From Position to Momentum to Position
 

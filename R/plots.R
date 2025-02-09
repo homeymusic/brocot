@@ -11,7 +11,7 @@
 plot_histogram <- function(data, num_bins, col_name, title, x_label) {
   
   ggplot2::ggplot(data,  ggplot2::aes(x = !!rlang::sym(col_name))) +
-    ggplot2::geom_histogram(bins = data$num_bins, fill = "black", color="gray") +
+    ggplot2::geom_histogram(bins = num_bins, color="black") +
     ggplot2::labs(title = title, x = x_label, y = "Count") +
     ggplot2::scale_x_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
     ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 10), labels = scales::label_number()) +
