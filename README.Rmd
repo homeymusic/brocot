@@ -12,29 +12,65 @@ devtools::load_all(".")
 `brocot` is an R package for exploring physics with coprime fractions.
 
 ```{r, echo=FALSE}
-num_samples  = 501
-num_bins     = 501
-slit_width   = 17
+num_per_dim  = 5001
+num_per_dim  = floor(sqrt(num_per_dim))
+num_bins     = num_per_dim
+slit_width   = 3
+slit_height  = slit_width
 
-dx           = slit_width/num_samples
+dx           = slit_width/num_per_dim
 min_x        = -slit_width / 2 + dx
 max_x        =  slit_width / 2 - dx
-x_real       = seq(from=min_x, to=max_x, by=dx)
-sigma_x_lt   = x_real - min_x + dx
-sigma_x_gt   = max_x - x_real + dx
-x = coprimer::nearby_coprime(x_real, sigma_x_lt, sigma_x_gt)
 
-sigma_p_lt   = 1 / sigma_x_lt
-sigma_p_gt   = 1 / sigma_x_gt
-p_real       = sigma_p_gt - sigma_p_lt
-p = coprimer::nearby_coprime(p_real, sigma_p_lt, sigma_p_gt)
+dy           = slit_height/num_per_dim
+min_y        = -slit_height / 2 + dy
+max_y        =  slit_height / 2 - dy
+
+x_real       = seq(from=min_x, to=max_x, by=dx)
+lhd_x        = x_real - min_x + dx
+rhd_x        = max_x - x_real + dx
+x = coprimer::nearby_coprime(x_real, lhd_x, rhd_x)
+
+y_real       = seq(from=min_y, to=max_y, by=dy)
+lhd_y        = y_real - min_y + dy
+rhd_y        = max_y - y_real + dy
+y = coprimer::nearby_coprime(y_real, lhd_y, rhd_y)
+
+lhd_p_x      = 1 / lhd_x
+rhd_p_x      = 1 / rhd_x
+p_x_real     = rhd_p_x - lhd_p_x
+p_x = coprimer::nearby_coprime(p_x_real, lhd_p_x, rhd_p_x)
+
+lhd_p_y      = 1 / lhd_y
+rhd_p_y      = 1 / rhd_y
+p_y_real     = rhd_p_y - lhd_p_y
+p_y = coprimer::nearby_coprime(p_y_real, lhd_p_y, rhd_p_y)
+
+
+x_screen     = x$approximation + p_x$approximation
+y_screen     = y$approximation + p_y$approximation
+
+screen       = expand.grid(x = x_screen, y = y_screen)
+```
+
+## x vs y
+
+```{r, echo=FALSE}
+plot_scatter(
+  data = screen,
+  x_col = "x",
+  y_col = "y",
+  title = "x vs y",
+  x_label = "x",
+  y_label = "y"
+)
 ```
 
 ## Position vs Momentum
 
 ```{r, echo=FALSE}
 plot_scatter(
-  data = data.frame(x = x$approximation, p = p$approximation),
+  data = data.frame(x = x$approximation, p = p_x$approximation),
   x_col = "x",
   y_col = "p",
   title = "Position vs Momentum",
@@ -44,7 +80,7 @@ plot_scatter(
 
 ```
 
-## Position
+## Position 
 
 ```{r, echo=FALSE}
 # Generate plots for Position (x)
@@ -59,47 +95,46 @@ plot_scatter(x, "approximation", "depth", "Stern-Brocot Depth vs. Position", "Ap
 
 ```{r, echo=FALSE}
 # Generate plots for Momentum (p)
-plot_histogram(p, num_bins, "approximation", "Histogram of Momentum", "Rational Number")
-plot_segments(p, "approximation", "thomae", "Thomae's Function of Momentum", "Approximation", "Thomae")
-plot_segments(p, "approximation", "euclids_orchard_height", "Euclid's Orchard of Momentum", "Approximation", "Redundancy")
-plot_histogram(p, num_bins, "error", "Histogram of Momentum Errors", "Error")
-plot_scatter(p, "approximation", "depth", "Stern-Brocot Depth vs. Momentum", "Approximation", "Depth")
+plot_histogram(p_x, num_bins, "approximation", "Histogram of Momentum", "Rational Number")
+plot_segments(p_x, "approximation", "thomae", "Thomae's Function of Momentum", "Approximation", "Thomae")
+plot_segments(p_x, "approximation", "euclids_orchard_height", "Euclid's Orchard of Momentum", "Approximation", "Redundancy")
+plot_histogram(p_x, num_bins, "error", "Histogram of Momentum Errors", "Error")
+plot_scatter(p_x, "approximation", "depth", "Stern-Brocot Depth vs. Momentum", "Approximation", "Depth")
 ```
 
 ## From Position to Momentum to Position
 
 ```{r, echo=T}
-num_samples  = 5
+num_per_dim  = 5
 num_bins     = 5
 slit_width   = 17
 
-dx           = slit_width/num_samples
+dx           = slit_width/num_per_dim
 min_x        = -slit_width / 2 + dx
 max_x        =  slit_width / 2 - dx
 x_real       = seq(from=min_x, to=max_x, by=dx)
-sigma_x_lt   = x_real - min_x + dx
-sigma_x_gt   = max_x - x_real + dx
-x = coprimer::nearby_coprime(x_real, sigma_x_lt, sigma_x_gt)
+lhd_x   = x_real - min_x + dx
+rhd_x   = max_x - x_real + dx
+x = coprimer::nearby_coprime(x_real, lhd_x, rhd_x)
 print(x)
 ```
 
 ```{r, echo=T}
-sigma_p_lt   = 1 / sigma_x_lt
-sigma_p_gt   = 1 / sigma_x_gt
-p_real       = sigma_p_gt - sigma_p_lt
-p = coprimer::nearby_coprime(p_real, sigma_p_lt, sigma_p_gt)
+lhd_p   = 1 / lhd_x
+rhd_p   = 1 / rhd_x
+p_real  = lhd_p - rhd_p
+p = coprimer::nearby_coprime(p_real, lhd_p, rhd_p)
 print(p)
 ```
 
 ```{r, echo=T}
-sigma_x_conj_lt = 1 / sigma_p_lt
-sigma_x_conj_gt = 1 / sigma_p_gt
-x_conj_real     = (sigma_x_conj_lt - sigma_x_conj_gt) / 2
-x_conj          = coprimer::nearby_coprime(x_conj_real, sigma_x_conj_lt, sigma_x_conj_gt)
+lhd_x_conj  = 1 / lhd_p
+rhd_x_conj  = 1 / rhd_p
+x_conj_real = (lhd_x_conj - rhd_x_conj) / 2
+x_conj      = coprimer::nearby_coprime(x_conj_real, lhd_x_conj, rhd_x_conj)
 print(x_conj)
 ```
 
 ```{r, echo=T}
 print(x == x_conj)
 ```
-
