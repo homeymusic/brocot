@@ -47,6 +47,7 @@ plot_segments <- function(data, x_col, y_col, title, x_label, y_label) {
 #'
 #' @export
 plot_scatter <- function(data, x_col, y_col, title, x_label, y_label) {
+  
   ggplot2::ggplot(data, ggplot2::aes(x = !!rlang::sym(x_col), y = !!rlang::sym(y_col))) +
     ggplot2::geom_point(alpha = 0.5, color = "black") +
     ggplot2::labs(title = title, x = x_label, y = y_label) +

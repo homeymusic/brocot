@@ -15,8 +15,8 @@ devtools::load_all(".")
 num_per_dim  = 5001
 num_per_dim  = floor(sqrt(num_per_dim))
 num_bins     = num_per_dim
-slit_width   = 3
-slit_height  = slit_width
+slit_width   = 1
+slit_height  = 3*slit_width
 
 dx           = slit_width/num_per_dim
 min_x        = -slit_width / 2 + dx
