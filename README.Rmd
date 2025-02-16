@@ -12,48 +12,63 @@ devtools::load_all(".")
 `brocot` is an R package for exploring physics with coprime fractions.
 
 ```{r, echo=FALSE}
-num_per_dim  = 5001
-num_per_dim  = floor(sqrt(num_per_dim))
+heisenberg   = 1
+elapsed_time = 10
+slit_size    = 0.8
+particle_count  = 1001
+
+num_per_dim  = floor(sqrt(particle_count))
 num_bins     = num_per_dim
-slit_width   = 1
-slit_height  = 3*slit_width
 
-dx           = slit_width/num_per_dim
-min_x        = -slit_width / 2 + dx
-max_x        =  slit_width / 2 - dx
+ds           = slit_size/num_per_dim
 
-dy           = slit_height/num_per_dim
-min_y        = -slit_height / 2 + dy
-max_y        =  slit_height / 2 - dy
+min_x        = -slit_size / 2
+max_x        =  slit_size / 2
+min_y        = -slit_size / 2
+max_y        =  slit_size / 2
 
-x_real       = seq(from=min_x, to=max_x, by=dx)
-lhd_x        = x_real - min_x + dx
-rhd_x        = max_x - x_real + dx
+x_real       = seq(from=min_x + ds, to=max_x-ds, by=ds)
+lhd_x        = x_real - min_x
+rhd_x        = max_x - x_real
 x = coprimer::nearby_coprime(x_real, lhd_x, rhd_x)
 
-y_real       = seq(from=min_y, to=max_y, by=dy)
-lhd_y        = y_real - min_y + dy
-rhd_y        = max_y - y_real + dy
+y_real       = seq(from=min_y + ds, to=max_y-ds, by=ds)
+lhd_y        = y_real - min_y
+rhd_y        = max_y - y_real
 y = coprimer::nearby_coprime(y_real, lhd_y, rhd_y)
 
-lhd_p_x      = 1 / lhd_x
-rhd_p_x      = 1 / rhd_x
-p_x_real     = rhd_p_x - lhd_p_x
+slit         = expand.grid(x = x$approximation, y = y$approximation)
+
+lhd_p_x      = heisenberg / lhd_x
+rhd_p_x      = heisenberg / rhd_x
+p_x_real     = (lhd_p_x - rhd_p_x) / 2 
 p_x = coprimer::nearby_coprime(p_x_real, lhd_p_x, rhd_p_x)
 
-lhd_p_y      = 1 / lhd_y
-rhd_p_y      = 1 / rhd_y
-p_y_real     = rhd_p_y - lhd_p_y
+lhd_p_y      = heisenberg / lhd_y
+rhd_p_y      = heisenberg / rhd_y
+p_y_real     = (lhd_p_y - rhd_p_y) / 2
 p_y = coprimer::nearby_coprime(p_y_real, lhd_p_y, rhd_p_y)
 
-
-x_screen     = x$approximation + p_x$approximation
-y_screen     = y$approximation + p_y$approximation
+x_screen     = x$approximation + elapsed_time * p_x$approximation
+y_screen     = y$approximation + elapsed_time * p_y$approximation
 
 screen       = expand.grid(x = x_screen, y = y_screen)
 ```
 
-## x vs y
+## Slit x vs y
+
+```{r, echo=FALSE}
+plot_scatter(
+  data = slit,
+  x_col = "x",
+  y_col = "y",
+  title = "x vs y",
+  x_label = "x",
+  y_label = "y"
+)
+```
+
+## Screen x vs y
 
 ```{r, echo=FALSE}
 plot_scatter(
